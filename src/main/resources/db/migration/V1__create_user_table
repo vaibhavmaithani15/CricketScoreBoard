@@ -1,0 +1,7 @@
+CREATE TABLE user_table (
+    user_id int,
+    first_name varchar(50),
+    last_name varchar(50),
+    user_type varchar(20),
+    user_created_by varchar(50)
+);
