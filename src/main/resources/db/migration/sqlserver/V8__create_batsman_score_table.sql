@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS `scoreboard`.`batsman_score` (
+  `batsman_score_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `match_id` INT(11) NOT NULL,
+  `no_of_sixes` INT(11) NOT NULL,
+  `no_of_fours` INT(11) NOT NULL,
+  `no_of_threes` INT(11) NOT NULL,
+  `no_of_twos` INT(11) NOT NULL,
+  `no_of_one` INT(11) NOT NULL,
+  `player_id` INT(11) NOT NULL,
+  `team_id` INT(11) NOT NULL,
+  `total_run` INT(11) NOT NULL,
+  `status` VARCHAR(20) NOT NULL,
+  `reason_of_out` VARCHAR(11) NOT NULL,
+  `player_over` INT(11) NOT NULL,
+  `out_type` VARCHAR (11) NOT NULL,
+  `out_by_player` INT(11) NOT NULL,
+  `no_of_balls_played` INT(11) NOT NULL,
+  PRIMARY KEY (`batsman_score_id`))
