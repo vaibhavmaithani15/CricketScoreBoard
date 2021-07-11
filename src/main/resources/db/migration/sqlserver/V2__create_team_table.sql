@@ -1,7 +1,16 @@
-CREATE TABLE `scoreboard`.`team` (
-                                     `team_id` INT UNSIGNED NOT NULL,
-                                     `team_name` VARCHAR(45) NOT NULL,
-                                     `team_desc` VARCHAR(45) NULL,
-                                     `team_selector` VARCHAR(45) NOT NULL,
-                                     `team_country` VARCHAR(45) NOT NULL,
-                                     PRIMARY KEY (`team_id`));
+CREATE TABLE IF NOT EXISTS `scoreboard`.`team`
+(
+    name     VARCHAR(100)  NOT NULL PRIMARY KEY,
+    description     VARCHAR(200) NULL,
+    selector VARCHAR(100)  NULL,
+    country  VARCHAR(100)  NOT NULL
+);
+
+INSERT INTO team
+values ('IND', 'TOP team in ICC', 'ravi', 'INDIA');
+INSERT INTO team
+values ('ENG', 'SECOND Top team in ICC', 'mark', 'ENGLAND');
+INSERT INTO team
+values ('AUS', 'THIRD TOP team in ICC', 'andrew', 'AUSTRLIA');
+INSERT INTO team
+values ('NEW', 'FOURTH TOP team in ICC', 'sam', 'NEWZLAND');

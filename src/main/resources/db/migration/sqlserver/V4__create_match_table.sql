@@ -1,16 +1,24 @@
-CREATE TABLE IF NOT EXISTS `scoreboard`.`match` (
-  `match_id` INT(11) NOT NULL,
-  `first_team_id` INT(11) NULL DEFAULT NULL,
-  `second_team_id` INT(11) NULL DEFAULT NULL,
-  `match_result` VARCHAR(45) NOT NULL,
-  `match_date` DATE NOT NULL,
-  `match_umpire` VARCHAR(45) NOT NULL,
-  `match_country` VARCHAR(45) NOT NULL,
-  `match_city` VARCHAR(45) NOT NULL,
-  `match_stadium` VARCHAR(45) NOT NULL,
-  `team_team_id` INT(10) UNSIGNED NOT NULL,
-  CONSTRAINT `fk_match_team1`
-    FOREIGN KEY (`team_team_id`)
-    REFERENCES `scoreboard`.`team` (`team_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE);
+CREATE TABLE IF NOT EXISTS `scoreboard`.`cricket_match`
+(
+    `match_id`         INT(11) PRIMARY KEY AUTO_INCREMENT,
+    `first_team_name`  VARCHAR(10) NULL DEFAULT NULL,
+    `second_team_name` VARCHAR(10) NULL DEFAULT NULL,
+    `result`           VARCHAR(45) NOT NULL,
+    `match_date`       DATE        NOT NULL,
+    `umpire`           VARCHAR(45) NOT NULL,
+    `country`          VARCHAR(45) NOT NULL,
+    `city`             VARCHAR(45) NOT NULL,
+    `stadium`          VARCHAR(45) NOT NULL,
+    CONSTRAINT `fk_first_team_name`
+        FOREIGN KEY (`first_team_name`)
+            REFERENCES `scoreboard`.`team` (`name`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    FOREIGN KEY (`second_team_name`)
+        REFERENCES `scoreboard`.`team` (`name`)
+);
+
+
+INSERT INTO cricket_match (first_team_name, second_team_name, result, match_date, umpire, country, city, stadium)
+values ('IND', 'AUS', 'NOT STARTED', '2021-09-12', 'Rahul', 'INDIA', 'DELHI', 'FIROSHA KOTLA');
+

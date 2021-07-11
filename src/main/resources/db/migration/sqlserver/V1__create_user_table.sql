@@ -4,7 +4,7 @@ CREATE TABLE user (
                       first_name varchar(50),
                       last_name varchar(50),
                       role varchar(20),
-                      enabled TINYINT NOT NULL DEFAULT 1,
+                      enabled INT NOT NULL DEFAULT 1,
                       user_created_by varchar(50)
 );
 

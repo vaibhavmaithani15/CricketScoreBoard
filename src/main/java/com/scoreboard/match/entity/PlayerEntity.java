@@ -5,20 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
-//@Data
-//@Builder
-//@Table(name = "player")
-//@NoArgsConstructor
-//@AllArgsConstructor
-public class Player {
+@Entity
+@Data
+@Builder
+@Table(name = "player")
+@NoArgsConstructor
+@AllArgsConstructor
+public class PlayerEntity {
+    @Id
+    @GeneratedValue( strategy=GenerationType.AUTO )
     private int playerId;
     private String playerName;
     private Date playerDob;
     private String playerCountry;
-    private Team teamId;
+    @OneToOne
+    private TeamEntity teamEntity;
 }
