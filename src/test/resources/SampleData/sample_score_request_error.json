@@ -1,0 +1,16 @@
+{
+  "matchId": null,
+  "ballerId": null,
+  "batsmanId": null,
+  "bold":false,
+  "bouncerBall": false,
+  "catchBy": 0,
+  "isBold": false,
+  "isOut": false,
+  "noBall": false,
+  "out": false,
+  "runoutBy": 28,
+  "runs": 4,
+  "stumpBy": 0,
+  "whiteBall": true
+}

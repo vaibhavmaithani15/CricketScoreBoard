@@ -37,10 +37,14 @@ dependencies {
 	implementation "org.flywaydb:flyway-core"
 
 
-	// dev tool
-	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.4.5'
+	implementation 'javax.validation:validation-api'
 
+
+	//Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+
 }
 
 

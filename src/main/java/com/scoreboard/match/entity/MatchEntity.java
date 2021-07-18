@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -20,8 +18,12 @@ import java.util.Date;
 public class MatchEntity {
     @Id
     private int matchId;
-    private String firstTeamName;
-    private String secondTeamName;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "first_team_name", referencedColumnName = "name")
+    private TeamEntity firstTeamName;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "second_team_name", referencedColumnName = "name")
+    private TeamEntity secondTeamName;
     private String result;
     private Date matchDate;
     private String umpire;

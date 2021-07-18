@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS `scoreboard`.`wicket`
             ON UPDATE CASCADE,
     FOREIGN KEY (`batsman_id`)
         REFERENCES `scoreboard`.`player` (`player_id`),
-    FOREIGN KEY (`catch_by`)
-        REFERENCES `scoreboard`.`player` (`player_id`),
+--     FOREIGN KEY (`catch_by`)
+--         REFERENCES `scoreboard`.`player` (`player_id`),
     FOREIGN KEY (`runout_by`)
         REFERENCES `scoreboard`.`player` (`player_id`),
     FOREIGN KEY (`stump_by`)

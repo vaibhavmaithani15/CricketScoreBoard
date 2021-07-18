@@ -1,20 +1,30 @@
 package com.scoreboard.match.controller.request;
 
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
+@NoArgsConstructor
 public class ScoreRequest {
-    public int matchId;
-    public int ballerId;
-    public int batsmanId;
-    public int runs;
+    @NonNull
+    public Integer matchId;
+    @NonNull
+    public Integer ballerId;
+    @NonNull
+    public Integer batsmanId;
+    public Integer runs;
     public boolean isOut;
     public boolean isBold;
-    public int catchBy;
-    public int runoutBy;
-    public int stumpBy;
+    public Integer catchBy;
+    public Integer runoutBy;
+    public Integer stumpBy;
     public boolean whiteBall;
     public boolean noBall;
     public boolean bouncerBall;
+
+    //absolute to relative path
+    // anotation
 
 }
