@@ -66,11 +66,11 @@ public class TeamController {
     }
 
 
-    //UPDATE MAPPING WITH SINGLE USER
+    //UPDATE MAPPING WITH SINGLE Team
     @PutMapping(path = "/update/{teamName}",consumes = "application/json",produces="application/json")
-    public ResponseEntity<TeamEntity> updateUser(@PathVariable String teamName, @RequestBody TeamRequest request){
+    public ResponseEntity<TeamEntity> updateTeam(@PathVariable String teamName, @RequestBody TeamRequest request){
         try {
-            TeamEntity updatedTeam = teamService.updateUser(teamName, request);
+            TeamEntity updatedTeam = teamService.updateTeam(teamName, request);
             if(updatedTeam!=null){
                 return new ResponseEntity<>(HttpStatus.OK);
             }
@@ -80,7 +80,7 @@ public class TeamController {
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // DELETE MAPPING WITH SINGLE USER
+    // DELETE MAPPING WITH SINGLE TEAM
     @DeleteMapping(path = "/delete/{teamName}",produces = "application/json")
     public ResponseEntity<TeamEntity> deleteTeam(@PathVariable String teamName){
         try {

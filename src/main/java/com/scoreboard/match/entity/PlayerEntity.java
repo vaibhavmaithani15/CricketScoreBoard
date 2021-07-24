@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -16,12 +17,13 @@ import java.util.Date;
 @AllArgsConstructor
 public class PlayerEntity {
     @Id
-    @GeneratedValue( strategy=GenerationType.AUTO )
+    @GeneratedValue( strategy=GenerationType.IDENTITY )
     private int playerId;
     private String name;
     private Date dob;
     private String country;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_name", referencedColumnName = "name")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_name")
     private TeamEntity teamEntity;
 }

@@ -40,7 +40,7 @@ public class TeamService {
             }catch (Exception e){
                 e.printStackTrace();
             }
-            return null;
+            return teamEntity;
         }
     }
 
@@ -73,8 +73,8 @@ public class TeamService {
 
 
 
-    //UPDATE USER SERVICE
-    public TeamEntity updateUser(String teamName, TeamRequest request) throws TeamNotFoundException {
+    //UPDATE PLAYER SERVICE
+    public TeamEntity updateTeam(String teamName, TeamRequest request) throws TeamNotFoundException {
         Optional<TeamEntity> optionalTeamEntity = repository.findById(teamName);
         if(optionalTeamEntity.isPresent()){
             TeamEntity entity = TeamEntity.builder()
