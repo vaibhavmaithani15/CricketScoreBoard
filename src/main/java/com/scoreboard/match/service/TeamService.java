@@ -26,9 +26,9 @@ public class TeamService {
 //        System.out.println(request.country);
 
         Optional<TeamEntity> teamName = repository.findById(request.name);
-        if(teamName.isPresent()){
+        if (teamName.isPresent()) {
             throw new TeamAlreadyExistException("Team already exist in our system please select another team name");
-        }else{
+        } else {
             TeamEntity teamEntity = TeamEntity.builder()
                     .name(request.name)
                     .description(request.desc)
@@ -37,7 +37,7 @@ public class TeamService {
                     .build();
             try {
                 return repository.save(teamEntity);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return teamEntity;
@@ -48,9 +48,9 @@ public class TeamService {
     //GET ALL TEAM SERVICE
     public List<TeamEntity> getAllTeam() throws TeamNotFoundException {
         List<TeamEntity> teams = repository.findAll();
-        if(teams.isEmpty()){
+        if (teams.isEmpty()) {
             throw new TeamNotFoundException("Team not exists in our system");
-        }else{
+        } else {
             return teams;
         }
     }
@@ -59,24 +59,23 @@ public class TeamService {
     //GET SINGLE TEAM SERVICE
     public TeamEntity getTeam(String teamName) throws TeamNotFoundException {
         Optional<TeamEntity> optionalTeamEntity = repository.findById(teamName);
-        TeamEntity entity=new TeamEntity();
-        if(optionalTeamEntity.isPresent()){
+        TeamEntity entity = new TeamEntity();
+        if (optionalTeamEntity.isPresent()) {
             entity.setName(optionalTeamEntity.get().getName());
             entity.setDescription(optionalTeamEntity.get().getDescription());
             entity.setSelector(optionalTeamEntity.get().getSelector());
             entity.setCountry(optionalTeamEntity.get().getCountry());
             return entity;
-        }else{
+        } else {
             throw new TeamNotFoundException("Team not exists in our system");
         }
     }
 
 
-
     //UPDATE PLAYER SERVICE
     public TeamEntity updateTeam(String teamName, TeamRequest request) throws TeamNotFoundException {
         Optional<TeamEntity> optionalTeamEntity = repository.findById(teamName);
-        if(optionalTeamEntity.isPresent()){
+        if (optionalTeamEntity.isPresent()) {
             TeamEntity entity = TeamEntity.builder()
                     .name(teamName)
                     .description(request.desc)
@@ -85,7 +84,7 @@ public class TeamService {
                     .build();
 
             return repository.save(entity);
-        }else{
+        } else {
             throw new TeamNotFoundException("Team not exists in our system");
 
         }
@@ -94,10 +93,10 @@ public class TeamService {
 
     public boolean deleteTeam(String teamName) throws TeamNotFoundException {
         Optional<TeamEntity> optionalTeamEntity = repository.findById(teamName);
-        if(optionalTeamEntity.isPresent()){
+        if (optionalTeamEntity.isPresent()) {
             repository.deleteById(teamName);
             return true;
-        }else{
+        } else {
             throw new TeamNotFoundException("Team not exists in our system");
 
         }

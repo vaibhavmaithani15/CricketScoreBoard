@@ -23,9 +23,9 @@ public class UserService {
     // ADD USER SERVICE
     public UserEntity addUser(UserRequest request) throws UserAlreadyExistException {
         Optional<UserEntity> optionalUserEntity = repository.findById(request.userName);
-        if(optionalUserEntity.isPresent()){
+        if (optionalUserEntity.isPresent()) {
             throw new UserAlreadyExistException("User already exist in our system please select another user name");
-        }else {
+        } else {
             UserEntity entity = UserEntity.builder()
                     .userName(request.userName)
                     .password(request.password)
@@ -44,7 +44,7 @@ public class UserService {
     public UserEntity deleteUser(String userName) throws UserNotFoundException {
         Optional<UserEntity> optionalUserEntity = repository.findById(userName);
 
-        if(optionalUserEntity.isPresent()){
+        if (optionalUserEntity.isPresent()) {
             UserEntity entity = UserEntity.builder().
                     userName(userName).
                     firstName(optionalUserEntity.get().getFirstName())
@@ -55,7 +55,7 @@ public class UserService {
                     .role(optionalUserEntity.get().getRole())
                     .build();
             return repository.save(entity);
-        }else{
+        } else {
             throw new UserNotFoundException("User not exists in our system");
 
         }
@@ -67,7 +67,7 @@ public class UserService {
     // UPDATE USER SERVICE
     public UserEntity updateUser(String userName, UserRequest request) throws UserNotFoundException {
         Optional<UserEntity> optionalUserEntity = repository.findById(userName);
-        if(optionalUserEntity.isPresent()){
+        if (optionalUserEntity.isPresent()) {
             UserEntity entity = UserEntity.builder()
                     .userName(userName)
                     .password(optionalUserEntity.get().getPassword())
@@ -79,7 +79,7 @@ public class UserService {
                     .build();
 
             return repository.save(entity);
-        }else{
+        } else {
             throw new UserNotFoundException("User not exists in our system");
 
         }
@@ -89,34 +89,33 @@ public class UserService {
     // GET SINGLE USER SERVICE
     public UserEntity getUser(String userName) throws UserNotFoundException {
         Optional<UserEntity> optionalUserEntity = repository.findById(userName);
-        UserEntity entity=new UserEntity();
-        if(optionalUserEntity.isPresent()){
-                entity.setUserName(optionalUserEntity.get().getUserName());
-                entity.setFirstName(optionalUserEntity.get().getFirstName());
-                entity.setLastName(optionalUserEntity.get().getLastName());
-                entity.setUserCreatedBy(optionalUserEntity.get().getUserCreatedBy());
-                entity.setRole(optionalUserEntity.get().getRole());
-                entity.setEnabled(optionalUserEntity.get().getEnabled());
-                return entity;
-        }else{
+        UserEntity entity = new UserEntity();
+        if (optionalUserEntity.isPresent()) {
+            entity.setUserName(optionalUserEntity.get().getUserName());
+            entity.setFirstName(optionalUserEntity.get().getFirstName());
+            entity.setLastName(optionalUserEntity.get().getLastName());
+            entity.setUserCreatedBy(optionalUserEntity.get().getUserCreatedBy());
+            entity.setRole(optionalUserEntity.get().getRole());
+            entity.setEnabled(optionalUserEntity.get().getEnabled());
+            return entity;
+        } else {
             throw new UserNotFoundException("User not exists in our system");
         }
     }
 
 
-
     // GET ALL USER SERVICE
     public List<UserEntity> getAllUser() throws UserNotFoundException {
         List<UserEntity> users = repository.findAll();
-        for (UserEntity user:users){
+        for (UserEntity user : users) {
             user.setPassword(null);
 //            users.add(user);
         }
 
-        if(users.isEmpty()){
+        if (users.isEmpty()) {
             throw new UserNotFoundException("User not exists in our system");
-        }else{
-           return users;
+        } else {
+            return users;
         }
     }
 }

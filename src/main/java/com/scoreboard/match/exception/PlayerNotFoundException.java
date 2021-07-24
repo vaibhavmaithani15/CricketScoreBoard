@@ -1,7 +1,7 @@
 package com.scoreboard.match.exception;
 
-public class PlayerNotFoundException extends Throwable{
-    public PlayerNotFoundException(String errorMessage){
+public class PlayerNotFoundException extends Throwable {
+    public PlayerNotFoundException(String errorMessage) {
         super(errorMessage);
     }
 }

@@ -23,73 +23,72 @@ public class TeamController {
 
 
     //POST MAPPING
-    @PostMapping(path="/add",consumes = "application/json",produces = "application/json")
-    public ResponseEntity<? extends Object> addTeam(@RequestBody TeamRequest request){
+    @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<? extends Object> addTeam(@RequestBody TeamRequest request) {
         try {
-            TeamEntity entity= teamService.addTeam(request);
-            if(entity!=null)
+            TeamEntity entity = teamService.addTeam(request);
+            if (entity != null)
                 return new ResponseEntity<TeamEntity>(entity, HttpStatus.OK);
         } catch (TeamAlreadyExistException e) {
-            return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
-
     //GET MAPPING WITH ALL Team
-    @GetMapping(path = "/get",produces = "application/json")
-    public ResponseEntity<TeamEntity> getAllTeam(){
+    @GetMapping(path = "/get", produces = "application/json")
+    public ResponseEntity<TeamEntity> getAllTeam() {
         try {
             List<TeamEntity> allTeam = teamService.getAllTeam();
-            if(!allTeam.isEmpty()){
-                return new ResponseEntity(allTeam,HttpStatus.OK);
+            if (!allTeam.isEmpty()) {
+                return new ResponseEntity(allTeam, HttpStatus.OK);
             }
         } catch (TeamNotFoundException e) {
-            return  new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // GET MAPPING WITH SINGLE USER
-    @GetMapping(path = "/get/{teamName}",produces = "application/json")
-    public ResponseEntity<TeamEntity> getUser(@PathVariable String teamName){
+    @GetMapping(path = "/get/{teamName}", produces = "application/json")
+    public ResponseEntity<TeamEntity> getUser(@PathVariable String teamName) {
         try {
-            TeamEntity team=teamService.getTeam(teamName);
-            if(team!=null){
-                return new ResponseEntity<>(team,HttpStatus.OK);
+            TeamEntity team = teamService.getTeam(teamName);
+            if (team != null) {
+                return new ResponseEntity<>(team, HttpStatus.OK);
             }
         } catch (TeamNotFoundException e) {
-            return  new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     //UPDATE MAPPING WITH SINGLE Team
-    @PutMapping(path = "/update/{teamName}",consumes = "application/json",produces="application/json")
-    public ResponseEntity<TeamEntity> updateTeam(@PathVariable String teamName, @RequestBody TeamRequest request){
+    @PutMapping(path = "/update/{teamName}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<TeamEntity> updateTeam(@PathVariable String teamName, @RequestBody TeamRequest request) {
         try {
             TeamEntity updatedTeam = teamService.updateTeam(teamName, request);
-            if(updatedTeam!=null){
+            if (updatedTeam != null) {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         } catch (TeamNotFoundException e) {
-            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // DELETE MAPPING WITH SINGLE TEAM
-    @DeleteMapping(path = "/delete/{teamName}",produces = "application/json")
-    public ResponseEntity<TeamEntity> deleteTeam(@PathVariable String teamName){
+    @DeleteMapping(path = "/delete/{teamName}", produces = "application/json")
+    public ResponseEntity<TeamEntity> deleteTeam(@PathVariable String teamName) {
         try {
             boolean deletedTeam = teamService.deleteTeam(teamName);
-            if(deletedTeam){
-                return  new ResponseEntity<TeamEntity>(HttpStatus.OK);
+            if (deletedTeam) {
+                return new ResponseEntity<TeamEntity>(HttpStatus.OK);
             }
         } catch (TeamNotFoundException e) {
-            return  new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }

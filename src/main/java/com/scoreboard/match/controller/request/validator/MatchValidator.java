@@ -1,49 +1,36 @@
-package com.scoreboard.match.controller.interceptor;
+package com.scoreboard.match.controller.request.validator;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scoreboard.match.controller.request.ScoreRequest;
-
 import com.scoreboard.match.entity.PlayerEntity;
-import com.scoreboard.match.exception.PlayerNotFoundInTeamException;
 import com.scoreboard.match.service.MatchService;
+import com.scoreboard.match.util.TeamEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.InputStream;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Component
 @Slf4j
-public class ScoreRequestInterceptor implements HandlerInterceptor {
+public class MatchValidator implements ConstraintValidator<ValidMatch, ScoreRequest> {
+
     private MatchService matchService;
 
-    public ScoreRequestInterceptor(MatchService matchService) {
+    public MatchValidator(MatchService matchService) {
         this.matchService = matchService;
     }
 
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        InputStream inputStream=null;
-        ScoreRequest scoreRequest;
-        try {
-            inputStream=request.getInputStream();
-            scoreRequest = objectMapper.readValue(inputStream, ScoreRequest.class);
-
-            log.info("SCORE REQUEST INTERCEPTED {}", scoreRequest.toString());
-            Map<String, List<PlayerEntity>> teams = matchService.getDetails(scoreRequest.matchId);
+    public boolean isValid(ScoreRequest scoreRequest, ConstraintValidatorContext context) {
+        log.info("SCORE REQUEST INTERCEPTED {}", scoreRequest.toString());
+        Map<String, List<PlayerEntity>> teams = matchService.getDetails(scoreRequest.matchId);
 
 
-            List<PlayerEntity> battingTeam = teams.get("firstTeam");
-            List<PlayerEntity> bowlingTeam = teams.get("secondTeam");
+        List<PlayerEntity> battingTeam = teams.get(TeamEnum.BattingTeam.toString());
+        List<PlayerEntity> bowlingTeam = teams.get(TeamEnum.BowlingTeam.toString());
+        if (battingTeam != null || bowlingTeam != null) {
             Optional<PlayerEntity> batsman = battingTeam.stream()
                     .filter(playerEntity -> {
                                 boolean isPlayerOfBattingTeam = false;
@@ -54,9 +41,7 @@ public class ScoreRequestInterceptor implements HandlerInterceptor {
                             }
 
                     ).findAny();
-            if (!batsman.isPresent()) {
-                throw new PlayerNotFoundInTeamException("Batsman not in the playing team");
-            }
+
             Optional<PlayerEntity> baller = bowlingTeam.stream()
                     .filter(playerEntity -> {
                                 boolean isPlayerOfBowlingTeam = false;
@@ -78,14 +63,10 @@ public class ScoreRequestInterceptor implements HandlerInterceptor {
                             }
                     )
                     .findAny();
-            if (!baller.isPresent()) {
-                throw new PlayerNotFoundInTeamException("Baller not in the playing team");
-            }
-        } finally {
-            if (inputStream != null) {
-//                inputStream.close();
+            if (batsman.isPresent() && baller.isPresent()) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }

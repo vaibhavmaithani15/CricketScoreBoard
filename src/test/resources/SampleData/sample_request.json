@@ -2,7 +2,7 @@
   "matchId": 1,
   "ballerId": 30,
   "batsmanId": 2,
-  "bold":false,
+  "bold": false,
   "bouncerBall": false,
   "catchBy": 12,
   "isBold": false,

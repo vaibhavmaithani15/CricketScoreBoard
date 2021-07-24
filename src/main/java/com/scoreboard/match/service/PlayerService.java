@@ -1,10 +1,10 @@
 package com.scoreboard.match.service;
 
 import com.scoreboard.match.controller.request.PlayerRequest;
-import com.scoreboard.match.controller.request.TeamRequest;
 import com.scoreboard.match.entity.PlayerEntity;
 import com.scoreboard.match.entity.TeamEntity;
-import com.scoreboard.match.exception.*;
+import com.scoreboard.match.exception.PlayerAlreadyExistException;
+import com.scoreboard.match.exception.PlayerNotFoundException;
 import com.scoreboard.match.repository.PlayerRepository;
 import com.scoreboard.match.repository.TeamRepository;
 import org.springframework.stereotype.Service;
@@ -16,27 +16,31 @@ import java.util.Optional;
 public class PlayerService {
 
     private PlayerRepository repository;
-
+    private TeamRepository teamRepository;
 
     public PlayerService(PlayerRepository repository, TeamRepository teamRepository) {
         this.repository = repository;
-
+        this.teamRepository = teamRepository;
     }
+
 
     //ADD Player service
     public PlayerEntity addPlayer(PlayerRequest request) throws PlayerAlreadyExistException {
 
-
-        PlayerEntity playerEntity = PlayerEntity.builder()
-                .name(request.playerName)
-                .dob(request.playerDob)
-                .country(request.playerCountry)
-                .teamEntity(request.teamEntityId)
-                .build();
-        try {
-            return repository.save(playerEntity);
-        } catch (Exception e) {
-            e.printStackTrace();
+        Optional<TeamEntity> teamEntity = teamRepository.findById(request.teamEntityId);
+        PlayerEntity playerEntity = null;
+        if (teamEntity.isPresent()) {
+            playerEntity = PlayerEntity.builder()
+                    .name(request.playerName)
+                    .dob(request.playerDob)
+                    .country(request.playerCountry)
+                    .teamEntity(teamEntity.get())
+                    .build();
+            try {
+                return repository.save(playerEntity);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return playerEntity;
 
@@ -70,32 +74,32 @@ public class PlayerService {
         }
     }
 
-//    Get all player with a particular team
+    //    Get all player with a particular team
     public List<PlayerEntity> getAllPlayerInTeam(String teamName) throws PlayerNotFoundException {
         List<PlayerEntity> players = repository.findByTeamEntity(teamName);
-        if(players.isEmpty()){
+        if (players.isEmpty()) {
             throw new PlayerNotFoundException("No player exists in out system for this particular team");
-        }else{
+        } else {
             return players;
         }
     }
 
 
-
     //update user service
     public PlayerEntity updatePlayer(int playerId, PlayerRequest request) throws PlayerNotFoundException {
         Optional<PlayerEntity> optionalPlayerEntity = repository.findById(playerId);
-        if(optionalPlayerEntity.isPresent()){
+
+        if (optionalPlayerEntity.isPresent()) {
             PlayerEntity entity = PlayerEntity.builder()
                     .playerId(playerId)
                     .name(request.playerName)
                     .country(request.playerCountry)
                     .dob(request.playerDob)
-                    .teamEntity(request.teamEntityId)
+                    .teamEntity(optionalPlayerEntity.get().getTeamEntity())
                     .build();
 
             return repository.save(entity);
-        }else{
+        } else {
             throw new PlayerNotFoundException("Player not exists in our system");
 
         }
@@ -103,16 +107,13 @@ public class PlayerService {
     }
 
 
-
-
-
     //delete a player service
     public boolean deletePlayer(int playerId) throws PlayerNotFoundException {
         Optional<PlayerEntity> optionalPlayerEntity = repository.findById(playerId);
-        if(optionalPlayerEntity.isPresent()){
+        if (optionalPlayerEntity.isPresent()) {
             repository.deleteById(playerId);
             return true;
-        }else{
+        } else {
             throw new PlayerNotFoundException("Team not exists in our system");
 
         }

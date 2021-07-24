@@ -1,12 +1,16 @@
 package com.scoreboard.match.controller.request;
 
 
+import com.scoreboard.match.controller.request.validator.ValidMatch;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
+@ValidMatch
+@AllArgsConstructor
 public class ScoreRequest {
     @NonNull
     public Integer matchId;
@@ -24,7 +28,5 @@ public class ScoreRequest {
     public boolean noBall;
     public boolean bouncerBall;
 
-    //absolute to relative path
-    // anotation
 
 }

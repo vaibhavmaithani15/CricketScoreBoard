@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -17,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class PlayerEntity {
     @Id
-    @GeneratedValue( strategy=GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int playerId;
     private String name;
     private Date dob;
