@@ -8,8 +8,7 @@ import java.util.Date;
 
 @Data
 public class PlayerRequest {
-    @NonNull
-    public int playerId;
+
     @NonNull
     public String playerName;
     @NonNull

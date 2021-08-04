@@ -25,6 +25,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(path = "/score")
+@CrossOrigin(origins = "*")
 public class ScorerController {
     private ScoreService scoreService;
 
