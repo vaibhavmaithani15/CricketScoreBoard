@@ -102,4 +102,13 @@ public class TeamService {
         }
 
     }
+
+    public List<TeamEntity> searchTeam(String keyword)throws TeamNotFoundException {
+        List<TeamEntity> teams = repository.findByNameContaining(keyword);
+        if (teams.isEmpty()) {
+            throw new TeamNotFoundException("Team not exists in our system");
+        } else {
+            return teams;
+        }
+    }
 }

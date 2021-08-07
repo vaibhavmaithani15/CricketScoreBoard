@@ -50,7 +50,7 @@ public class MatchService {
         Optional<TeamEntity> secondTeamEntity=teamRepository.findById(request.secondTeamName);
         Optional<MatchEntity> entity = matchRepository.findById(request.matchId);
         MatchEntity matchEntity = null;
-        if (entity.isPresent()) {
+        if (firstTeamEntity.isPresent() && secondTeamEntity.isPresent()) {
             matchEntity= MatchEntity.builder()
                     .firstTeamName(firstTeamEntity.get())
                     .secondTeamName(secondTeamEntity.get())

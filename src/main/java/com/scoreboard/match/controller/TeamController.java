@@ -61,7 +61,7 @@ public class TeamController {
                 return new ResponseEntity<>(team, HttpStatus.OK);
             }
         } catch (TeamNotFoundException e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -94,6 +94,21 @@ public class TeamController {
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    //Search Team functionality
+    @GetMapping(path = "/search/{keyword}",produces = "application/json")
+    public ResponseEntity<TeamEntity> searchTeam(@PathVariable String keyword ){
+        try {
+            List<TeamEntity> searchedTeams = teamService.searchTeam(keyword);
+            if (!searchedTeams.isEmpty()) {
+                return new ResponseEntity(searchedTeams, HttpStatus.OK);
+            }
+        }catch (TeamNotFoundException e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 }
 
 
