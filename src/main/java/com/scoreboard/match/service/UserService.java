@@ -5,6 +5,7 @@ import com.scoreboard.match.entity.UserEntity;
 import com.scoreboard.match.exception.UserAlreadyExistException;
 import com.scoreboard.match.exception.UserNotFoundException;
 import com.scoreboard.match.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,13 +16,18 @@ public class UserService {
 
     private UserRepository repository;
 
-    public UserService(UserRepository repository) {
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public UserService(UserRepository repository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.repository = repository;
+
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
 
     // ADD USER SERVICE
     public UserEntity addUser(UserRequest request) throws UserAlreadyExistException {
+
         Optional<UserEntity> optionalUserEntity = repository.findById(request.userName);
         if (optionalUserEntity.isPresent()) {
             throw new UserAlreadyExistException("User already exist in our system please select another user name");
@@ -31,7 +37,7 @@ public class UserService {
             }else {
                 UserEntity entity = UserEntity.builder()
                         .userName(request.userName)
-                        .password(request.password)
+                        .password(bCryptPasswordEncoder.encode(request.password))
                         .firstName(request.firstName)
                         .lastName(request.lastName)
                         .enabled(1)
