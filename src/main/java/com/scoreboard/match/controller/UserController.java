@@ -14,6 +14,7 @@ import java.util.List;
 @CrossOrigin(origins="*")
 @RestController
 @RequestMapping(path = "/user")
+@CrossOrigin(origins = "*")
 public class UserController {
     private UserService userService;
 
@@ -86,7 +87,11 @@ public class UserController {
         try {
             UserEntity updatedUser = userService.updateUser(userName, request);
             if (updatedUser != null) {
+<<<<<<< HEAD
                 return new ResponseEntity(updatedUser, HttpStatus.OK);
+=======
+                return new ResponseEntity(updatedUser,HttpStatus.OK);
+>>>>>>> a8380a5a75d48c690c65963eb667d093d710f8fa
             }
         } catch (UserNotFoundException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);

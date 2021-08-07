@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS `scoreboard`.`cricket_match`
             ON UPDATE CASCADE,
     FOREIGN KEY (`second_team_name`)
         REFERENCES `scoreboard`.`team` (`name`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 

@@ -9,11 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins="*")
 @RestController
 @RequestMapping(path = "/team")
+@CrossOrigin(origins = "*")
 public class TeamController {
 
     private TeamService teamService;
@@ -25,7 +27,7 @@ public class TeamController {
 
     //POST MAPPING
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<? extends Object> addTeam(@RequestBody TeamRequest request) {
+    public ResponseEntity<? extends Object> addTeam(@Valid @RequestBody TeamRequest request) {
         try {
             TeamEntity entity = teamService.addTeam(request);
             if (entity != null)
@@ -53,14 +55,14 @@ public class TeamController {
 
     // GET MAPPING WITH SINGLE USER
     @GetMapping(path = "/get/{teamName}", produces = "application/json")
-    public ResponseEntity<TeamEntity> getUser(@PathVariable String teamName) {
+    public ResponseEntity<TeamEntity> getTeam(@PathVariable String teamName) {
         try {
             TeamEntity team = teamService.getTeam(teamName);
             if (team != null) {
                 return new ResponseEntity<>(team, HttpStatus.OK);
             }
         } catch (TeamNotFoundException e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -93,6 +95,21 @@ public class TeamController {
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    //Search Team functionality
+    @GetMapping(path = "/search/{keyword}",produces = "application/json")
+    public ResponseEntity<TeamEntity> searchTeam(@PathVariable String keyword ){
+        try {
+            List<TeamEntity> searchedTeams = teamService.searchTeam(keyword);
+            if (!searchedTeams.isEmpty()) {
+                return new ResponseEntity(searchedTeams, HttpStatus.OK);
+            }
+        }catch (TeamNotFoundException e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 }
 
 

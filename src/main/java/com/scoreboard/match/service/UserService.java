@@ -26,16 +26,20 @@ public class UserService {
         if (optionalUserEntity.isPresent()) {
             throw new UserAlreadyExistException("User already exist in our system please select another user name");
         } else {
-            UserEntity entity = UserEntity.builder()
-                    .userName(request.userName)
-                    .password(request.password)
-                    .firstName(request.firstName)
-                    .lastName(request.lastName)
-                    .enabled(1)
-                    .userCreatedBy("System")
-                    .role("user")
-                    .build();
-            return repository.save(entity);
+            if(request.getPassword().isEmpty()){
+                throw new UserAlreadyExistException("Password cannot be empty");
+            }else {
+                UserEntity entity = UserEntity.builder()
+                        .userName(request.userName)
+                        .password(request.password)
+                        .firstName(request.firstName)
+                        .lastName(request.lastName)
+                        .enabled(1)
+                        .userCreatedBy("System")
+                        .role("user")
+                        .build();
+                return repository.save(entity);
+            }
         }
     }
 

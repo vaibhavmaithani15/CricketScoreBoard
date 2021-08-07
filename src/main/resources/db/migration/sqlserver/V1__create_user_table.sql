@@ -7,5 +7,5 @@ CREATE TABLE user (
                       enabled INT NOT NULL DEFAULT 1,
                       user_created_by varchar(50)
 );
-
 INSERT INTO user values ('admin','21232f297a57a5a743894a0e4a801fc3','rahul','maithani','adimn',1,'System');
+INSERT INTO user values ('user','21232f297a57a5a743894a0e4a801fc3','rahul','maithani','user',1,'System');

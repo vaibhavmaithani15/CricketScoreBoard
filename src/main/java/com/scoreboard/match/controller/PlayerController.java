@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/player")
+@CrossOrigin(origins = "*")
 public class PlayerController {
     private PlayerService playerService;
 
@@ -26,14 +27,15 @@ public class PlayerController {
     // POST MAPPING FOR PLAYER CONTROLLER
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity<? extends Object> addPlayer(@Valid @RequestBody PlayerRequest request) {
+        PlayerEntity entity;
         try {
-            PlayerEntity entity = playerService.addPlayer(request);
+          entity = playerService.addPlayer(request);
             if (entity != null)
                 return new ResponseEntity<PlayerEntity>(entity, HttpStatus.OK);
         } catch (PlayerAlreadyExistException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(entity,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
@@ -53,7 +55,7 @@ public class PlayerController {
 
     // GET MAPPING WITH SINGLE USER using playerId
     @GetMapping(path = "/get/{playerId}", produces = "application/json")
-    public ResponseEntity<PlayerEntity> getUser(@PathVariable int playerId) {
+    public ResponseEntity<PlayerEntity> getPlayer(@PathVariable int playerId) {
         try {
             PlayerEntity player = playerService.getPlayer(playerId);
             if (player != null) {
@@ -84,22 +86,23 @@ public class PlayerController {
 
     //PUT MAPPING WITH SINGLE PLAYER
     @PutMapping(path = "/update/{playerId}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<PlayerEntity> updateUser(@Valid @PathVariable int playerId, @RequestBody PlayerRequest request) {
+    public ResponseEntity<PlayerEntity> updatePlayer(@Valid @PathVariable int playerId, @RequestBody PlayerRequest request) {
+        PlayerEntity updatedPlayer;
         try {
-            PlayerEntity updatedPlayer = playerService.updatePlayer(playerId, request);
+             updatedPlayer= playerService.updatePlayer(playerId, request);
             if (updatedPlayer != null) {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         } catch (PlayerNotFoundException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(updatedPlayer,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     // DELETE MAPPING WITH SINGLE TEAM
     @DeleteMapping(path = "/delete/{playerId}", produces = "application/json")
-    public ResponseEntity<PlayerEntity> deleteTeam(@PathVariable int playerId) {
+    public ResponseEntity<PlayerEntity> deletePlayer(@PathVariable int playerId) {
         try {
             boolean deletedPlayer = playerService.deletePlayer(playerId);
             if (deletedPlayer) {
@@ -108,7 +111,7 @@ public class PlayerController {
         } catch (PlayerNotFoundException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(playerId,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

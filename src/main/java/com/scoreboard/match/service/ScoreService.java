@@ -4,6 +4,7 @@ import com.scoreboard.match.controller.request.ScoreRequest;
 import com.scoreboard.match.entity.*;
 import com.scoreboard.match.repository.BallerRepository;
 import com.scoreboard.match.repository.BatsmanRepository;
+import com.scoreboard.match.repository.MatchRepository;
 import com.scoreboard.match.repository.WicketRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,15 @@ public class ScoreService {
     private BallerRepository ballerRepository;
     private BatsmanRepository batsmanRepository;
     private WicketRepository wicketRepository;
+    private MatchRepository matchRepository;
 
     public ScoreService(BallerRepository ballerRepository,
                         BatsmanRepository batsmanRepository,
-                        WicketRepository wicketRepository) {
+                        WicketRepository wicketRepository, MatchRepository matchRepository) {
         this.ballerRepository = ballerRepository;
         this.batsmanRepository = batsmanRepository;
         this.wicketRepository = wicketRepository;
+        this.matchRepository = matchRepository;
     }
 
     public boolean enterScore(ScoreRequest request) {
@@ -124,10 +127,11 @@ public class ScoreService {
 
     private void playerOut(ScoreRequest request) {
         //wicket table -> insert
+        Optional<MatchEntity> matchEntity = matchRepository.findById(request.matchId);
         WicketEntity wicketEntity = wicketRepository.save(WicketEntity.builder()
                 .ballerId(request.ballerId)
                 .batsmanId(request.batsmanId)
-                .matchId(request.matchId)
+                .matchId(matchEntity.get())
                 .catchBy(request.catchBy)
                 .runoutBy(request.runoutBy)
                 .stumpBy(request.stumpBy)

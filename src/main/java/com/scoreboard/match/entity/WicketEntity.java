@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 
@@ -24,6 +22,8 @@ public class WicketEntity {
     private int catchBy;
     private int runoutBy;
     private int stumpBy;
-    private int matchId;
+    @ManyToOne
+    @JoinColumn(name = "match_id")
+    private MatchEntity matchId;
 
 }
