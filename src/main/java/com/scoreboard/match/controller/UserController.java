@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping(path = "/user")
 public class UserController {
@@ -85,7 +86,7 @@ public class UserController {
         try {
             UserEntity updatedUser = userService.updateUser(userName, request);
             if (updatedUser != null) {
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity(updatedUser, HttpStatus.OK);
             }
         } catch (UserNotFoundException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
