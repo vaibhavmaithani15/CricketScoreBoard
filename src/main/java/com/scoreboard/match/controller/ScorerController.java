@@ -1,6 +1,7 @@
 package com.scoreboard.match.controller;
 
 import com.scoreboard.match.controller.request.ScoreRequest;
+import com.scoreboard.match.rabitmq.PublishScore;
 import com.scoreboard.match.service.ScoreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +28,12 @@ import javax.validation.Valid;
 @RequestMapping(path = "/score")
 @CrossOrigin(origins = "*")
 public class ScorerController {
-    private ScoreService scoreService;
 
-    public ScorerController(ScoreService scoreService) {
+    private ScoreService scoreService;
+    private PublishScore publishScore;
+    public ScorerController(ScoreService scoreService, PublishScore publishScore) {
         this.scoreService = scoreService;
+        this.publishScore = publishScore;
     }
 
     /**
@@ -46,6 +49,7 @@ public class ScorerController {
     public ResponseEntity addScore(@Valid @RequestBody ScoreRequest request) {
         boolean success = scoreService.enterScore(request);
         if (success) {
+            publishScore.publishToRabbitMq(request);
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

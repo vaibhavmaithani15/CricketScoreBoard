@@ -44,7 +44,7 @@ public class MatchService {
         return teams;
     }
 
-    //ADD Player service
+    //ADD Match service
     public MatchEntity addMatch(MatchRequest request) throws MatchAlreadyExistException {
         Optional<TeamEntity> firstTeamEntity=teamRepository.findById(request.firstTeamName);
         Optional<TeamEntity> secondTeamEntity=teamRepository.findById(request.secondTeamName);
@@ -82,7 +82,7 @@ public class MatchService {
         }
     }
 
-    //GET SINGLE PLAYER SERVICE
+    //GET SINGLE Match SERVICE
     public MatchEntity getMatch(int matchId) throws MatchNotFoundException {
         Optional<MatchEntity> optionalMatchEntity = matchRepository.findById(matchId);
         MatchEntity entity = new MatchEntity();

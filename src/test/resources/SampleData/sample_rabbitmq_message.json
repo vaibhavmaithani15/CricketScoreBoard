@@ -1,0 +1,44 @@
+{
+  "bating": [
+    {
+      "position": "bating",
+      "name": "Virat Kholi",
+      "ball": "20",
+      "run": "10",
+      "boundary": "2",
+      "six": "0",
+      "sRate": "100.0"
+    },
+    {
+      "position": "bowling",
+      "name": "Sachin",
+      "ball": "20",
+      "run": "10",
+      "boundary": "2",
+      "six": "0",
+      "sRate": "100.0"
+    }
+  ],
+  "bowling": [
+    {
+      "position": "current",
+      "name": "Rahul",
+      "over": "5.3",
+      "maiden": "2",
+      "econ": "6.5",
+      "wicket": "2",
+      "six": "0",
+      "boundary": "3"
+    },
+    {
+      "position": "last",
+      "name": "Amit",
+      "over": "5.3",
+      "maiden": "2",
+      "econ": "6.5",
+      "wicket": "2",
+      "six": "0",
+      "boundary": "3"
+    }
+  ]
+}

@@ -19,6 +19,11 @@ userid : admin
 password : rahul1234
 ~~~
 
+# Rabitmq Docker Image
+ ~~~
+docker run -d --rm --name rabbitmq -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+ ~~~
+
 # To create a PKCS12 keystore
 ~~~
 keytool -genkeypair -alias scoreboard -keyalg RSA -keysize 4096 -storetype PKCS12 -keystore scoreboard.p12 -validity 3650 -storepass xyz123
