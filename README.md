@@ -121,4 +121,5 @@ These properties needs to be set inside the <b>application.properties</b> file.
     spring.cloud.stream.bindings.address.contentType=application/json
     spring.cloud.stream.bindings.address.group=matchscore
 
-# Database Commands
+# Database Diagram
+![]()
