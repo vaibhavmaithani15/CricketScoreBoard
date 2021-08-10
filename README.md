@@ -121,7 +121,7 @@ These properties needs to be set inside the <b>application.properties</b> file.
     spring.cloud.stream.bindings.address.contentType=application/json
     spring.cloud.stream.bindings.address.group=matchscore
 # Database Diagram
-![](CricketScoreBoard/blob/main/src/main/resources/images/Database.png)
+![](vaibhavmaithani15/CricketScoreBoard/blob/main/src/main/resources/images/Database.png)
 
 # Database Commands
 Copy paste these sql command inside <b>resources/db/migration/mysql/filename.sql</b> to create the following tables into the database 
