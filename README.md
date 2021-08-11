@@ -12,6 +12,7 @@ Live Cricket Match Scoreboard is an API which can help you to
 8 Mysql - 8\
 9 Gradle
 ## System Design
+This is the working model of the CricketScoreBoard Api
 ![](https://github.com/vaibhavmaithani15/CricketScoreBoard/blob/main/src/main/resources/images/system.jpg)
 
 
