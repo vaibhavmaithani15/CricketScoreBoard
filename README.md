@@ -36,6 +36,16 @@ RabbitMQ is a messaging broker - an intermediary for messaging. It gives your ap
 ~~~
 $ docker run -d --rm --name rabbitmq -p 15672:15672 -p 5672:5672 rabbitmq:3-management
  ~~~
+##### Port address of rabbitmq
+~~~
+$ http://localhost:15672
+~~~
+##### Username and Password of rabbitmq 
+~~~
+Username:- guest
+Password:- guest
+~~~
+
 ## PKCS12 Keystore Generation 
 Run these command to generate a TLS(Transport Layer Security) certificate self signed for security of transfer data over the network from http to https 
 ##### To generate PKCS12 security certificate (self signed)
