@@ -35,8 +35,98 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ScorerController.class)
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class ScorerControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private LocalValidatorFactoryBean localValidatorFactoryBean;
+    @MockBean
+    private ScoreService scoreService;
+    @MockBean
+    private MatchService matchService;
+    @MockBean
+    private UserRepository userRepository;
+    @MockBean
+    private PublishScore publishScore;
+    @MockBean
+    private AuthenticationService authenticationService;
+    @Test
+    public void testValidMatch() throws Exception {
+        when(matchService.getDetails(1)).thenReturn(mockMatchServiceDetails());
+
+        UserEntity user = UserEntity.builder()
+                .password("test")
+                .enabled(1)
+                .role("admin")
+                .firstName("test")
+                .lastName("test")
+                .userName("test12")
+                .userCreatedBy("test")
+                .build();
+
+
+        when(authenticationService.loadUserByUsername("Rahul")).thenReturn(new ScoreboardUserDetails(user));
+        when(scoreService.enterScore(new ScoreRequest(1, 30, 2, 4, false,
+                false, 0, 0, 0, false, false, false))).thenReturn(true);
+
+
+        when(matchService.getDetails(1)).thenReturn(getMatchDetail());
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders
+                .post("/score/add")
+                .content(request1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+
+                .andExpect(MockMvcResultMatchers.status().is(200));
+        result.andExpect(MockMvcResultMatchers.status().is(200));
+
+
+    }
+    private Map<String, List<PlayerEntity>>  getMatchDetail(){
+        Map<String, List<PlayerEntity>> team=new HashMap<>();
+        List<PlayerEntity> firstTeamPlayers = new ArrayList<>();
+        List<PlayerEntity> secondTeamPlayers = new ArrayList<>();
+        firstTeamPlayers.add(PlayerEntity.builder().playerId(2).build());
+        secondTeamPlayers.add(PlayerEntity.builder().playerId(30).build());
+
+        team.put(TeamEnum.BattingTeam.toString(), firstTeamPlayers);
+        team.put(TeamEnum.BowlingTeam.toString(), secondTeamPlayers);
+        return team;
+    }
+
+    @Test
+    public void testInvalidMatch() throws Exception {
+        when(matchService.getDetails(1)).thenReturn(new HashMap<String, List<PlayerEntity>>());
+        when(scoreService.enterScore(new ScoreRequest(1, 15, 42, 4, false,
+                false, 0, 0, 0, false, false, false))).thenReturn(true);
+
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders
+                .post("/score/add")
+                .content(request2)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(400));
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+
+    }
+
+    private Map<String, List<PlayerEntity>> mockMatchServiceDetails() {
+        Map<String, List<PlayerEntity>> teams = new HashMap<>();
+        List<PlayerEntity> firstTeamPlayers = new ArrayList<PlayerEntity>();
+        firstTeamPlayers.add(PlayerEntity.builder()
+                .playerId(42)
+                .build());
+        List<PlayerEntity> secondTeamPlayers = new ArrayList<>();
+        secondTeamPlayers.add(PlayerEntity.builder()
+                .playerId(15)
+                .build());
+
+        teams.put(TeamEnum.BattingTeam.toString(), firstTeamPlayers);
+        teams.put(TeamEnum.BowlingTeam.toString(), secondTeamPlayers);
+        return teams;
+    }
     String request1 = "{\n" +
             "  \"ballerId\": 30,\n" +
             "  \"batsmanId\": 2,\n" +
@@ -65,81 +155,4 @@ public class ScorerControllerTest {
             "  \"stumpBy\": 0,\n" +
             "  \"whiteBall\": false\n" +
             "}";
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private LocalValidatorFactoryBean localValidatorFactoryBean;
-    @MockBean
-    private ScoreService scoreService;
-    @MockBean
-    private MatchService matchService;
-    @MockBean
-    private UserRepository userRepository;
-    @MockBean
-    private PublishScore publishScore;
-    @MockBean
-    private AuthenticationService authenticationService;
-//    @Test
-//    public void testValidMatch() throws Exception {
-//        when(matchService.getDetails(1)).thenReturn(mockMatchServiceDetails());
-//
-//        UserEntity user = UserEntity.builder()
-//                .password("test")
-//                .enabled(1)
-//                .role("admin")
-//                .firstName("test")
-//                .lastName("test")
-//                .userName("test12")
-//                .userCreatedBy("test")
-//                .build();
-//
-//
-//        when(authenticationService.loadUserByUsername("Rahul")).thenReturn(new ScoreboardUserDetails(user));
-//        when(scoreService.enterScore(new ScoreRequest(1, 30, 2, 4, false,
-//                false, 0, 0, 0, false, false, false))).thenReturn(true);
-//
-//
-//        ResultActions result = mockMvc.perform(MockMvcRequestBuilders
-//                .post("/score/add")
-//                .content(request1)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON))
-//
-//                .andExpect(MockMvcResultMatchers.status().is(200));
-//        result.andExpect(MockMvcResultMatchers.status().is(200));
-//
-//
-//    }
-//
-//    @Test
-//    public void testInvalidMatch() throws Exception {
-//        when(matchService.getDetails(1)).thenReturn(new HashMap<String, List<PlayerEntity>>());
-//        when(scoreService.enterScore(new ScoreRequest(1, 15, 42, 4, false,
-//                false, 0, 0, 0, false, false, false))).thenReturn(true);
-//
-//        ResultActions result = mockMvc.perform(MockMvcRequestBuilders
-//                .post("/score/add")
-//                .content(request2)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(MockMvcResultMatchers.status().is(400));
-//        result.andExpect(MockMvcResultMatchers.status().isBadRequest());
-//
-//    }
-
-    private Map<String, List<PlayerEntity>> mockMatchServiceDetails() {
-        Map<String, List<PlayerEntity>> teams = new HashMap<>();
-        List<PlayerEntity> firstTeamPlayers = new ArrayList<PlayerEntity>();
-        firstTeamPlayers.add(PlayerEntity.builder()
-                .playerId(42)
-                .build());
-        List<PlayerEntity> secondTeamPlayers = new ArrayList<>();
-        secondTeamPlayers.add(PlayerEntity.builder()
-                .playerId(15)
-                .build());
-
-        teams.put(TeamEnum.BattingTeam.toString(), firstTeamPlayers);
-        teams.put(TeamEnum.BowlingTeam.toString(), secondTeamPlayers);
-        return teams;
-    }
 }
