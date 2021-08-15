@@ -1,8 +1,10 @@
 package com.scoreboard.match.rabitmq.message;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class Bating {
     public String position;
     public String name;
