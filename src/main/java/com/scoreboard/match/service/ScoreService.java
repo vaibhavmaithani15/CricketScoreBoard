@@ -166,4 +166,23 @@ public class ScoreService {
             batsmanRepository.save(b);
         });
     }
+
+    public BatsmanScoreEntity getBatsmanScoreByMatch(Integer matchId, Integer batsmanId) {
+
+        Optional<BatsmanScoreEntity> batsman = batsmanRepository.findById(BatsmanScoreId.builder()
+                .batsmanId(batsmanId)
+                .matchId(matchId)
+                .build());
+        return batsman.get();
+    }
+
+    public BallerScoreEntity getBallerSpell(Integer matchId, Integer ballerId) {
+        Optional<BallerScoreEntity> baller = ballerRepository.findById(BallerScoreId.builder()
+                .ballerId(ballerId)
+                .matchId(matchId)
+                .build());
+        return baller.get();
+
+
+    }
 }
