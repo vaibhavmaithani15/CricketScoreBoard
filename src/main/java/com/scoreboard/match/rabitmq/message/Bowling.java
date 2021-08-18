@@ -8,10 +8,10 @@ import lombok.Data;
 public class Bowling {
     public String position;
     public String name;
-    public String over;
-    public String maiden;
-    public String econ;
-    public String wicket;
-    public String six;
-    public String boundary;
+    public int over;
+    public int maiden;
+    public int econ;
+    public int wicket;
+    public int six;
+    public int boundary;
 }
