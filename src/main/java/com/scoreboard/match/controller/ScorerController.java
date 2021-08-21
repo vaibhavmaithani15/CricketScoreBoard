@@ -3,6 +3,7 @@ package com.scoreboard.match.controller;
 import com.scoreboard.match.controller.request.ScoreRequest;
 import com.scoreboard.match.rabitmq.PublishScore;
 import com.scoreboard.match.service.ScoreService;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -31,9 +32,13 @@ public class ScorerController {
 
     private ScoreService scoreService;
     private PublishScore publishScore;
-    public ScorerController(ScoreService scoreService, PublishScore publishScore) {
+    private MeterRegistry meterRegistry;
+    public ScorerController(ScoreService scoreService,
+                            PublishScore publishScore,
+                            MeterRegistry meterRegistry) {
         this.scoreService = scoreService;
         this.publishScore = publishScore;
+        this.meterRegistry = meterRegistry;
     }
 
     /**
@@ -47,6 +52,8 @@ public class ScorerController {
      */
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity addScore(@Valid @RequestBody ScoreRequest request) {
+        meterRegistry.counter("cricket.match.score.add.request").increment();
+
         boolean success = scoreService.enterScore(request);
         if (success) {
             publishScore.publishToRabbitMq(request);
