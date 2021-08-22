@@ -13,7 +13,7 @@ Live Cricket Match Scoreboard is an API which can help you to
 9 Gradle
 ## System Design
 This is the working model of the CricketScoreBoard Api
-![](https://github.com/vaibhavmaithani15/CricketScoreBoard/blob/main/src/main/resources/images/system.jpg)
+![](https://github.com/vaibhavmaithani15/CricketScoreBoard/blob/main/src/main/resources/images/system.png)
 
 
 
@@ -26,7 +26,8 @@ Copy and paste these commands inside the docker file.
 #### MySql Docker Image
 To run mysql docker image
 ~~~
-$ docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_DATABASE=hello -e MYSQL_USER=hello -e MYSQL_PASSWORD=dummytodos -p 3308:3306 mysql:5.7
+$ docker run -d --rm --name mysql -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_DATABASE=scoreboard -e MYSQL_USER=rahul -e MYSQL_PASSWORD=abc123 -p 3308:3306 mysql:5.7
+
 ~~~
 
 #### Rabbitmq Docker Image
