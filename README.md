@@ -29,6 +29,11 @@ To run mysql docker image
 $ docker run -d --rm --name mysql -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_DATABASE=scoreboard -e MYSQL_USER=rahul -e MYSQL_PASSWORD=abc123 -p 3308:3306 mysql:5.7
 
 ~~~
+#### Prometheus Docker Image
+To run prometheus docker image
+~~~
+docker run -d --rm --name=prometheus -p 9090:9090 -v <PROMETHEUS_YML_LOCATION>/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus --config.file=/etc/prometheus/prometheus.yml
+~~~
 
 #### Rabbitmq Docker Image
 RabbitMQ is a messaging broker - an intermediary for messaging. It gives your applications a common platform to send and receive messages, and your messages a safe place to live until received.
