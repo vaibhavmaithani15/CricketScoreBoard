@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class MatchApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MatchApplication.class, args);
+                SpringApplication.run(MatchApplication.class, args);
     }
 
 }

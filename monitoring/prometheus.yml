@@ -15,12 +15,25 @@ scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
     # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
+#     scheme defaults to 'https'.
+    scheme: 'https'
+    tls_config:
+      insecure_skip_verify: true
     static_configs:
-      - targets: ['127.0.0.1:9090']
+      - targets: ['192.168.1.7:9090']
 
   - job_name: 'spring-actuator'
-    metrics_path: 'actuator/metrics'
+
+    basic_auth:
+      username: rahul
+      password: rahul1234
+    scheme: 'https'
+    tls_config:
+      insecure_skip_verify: true
+    metrics_path: 'actuator/prometheus'
     scrape_interval: 5s
     static_configs:
-      - targets: ['127.0.0.1:8081']
+      - targets: ['192.168.1.7:8081']
+        labels:
+         group: 'test'
+         application: 'app1'

@@ -32,7 +32,11 @@ $ docker run -d --rm --name mysql -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_
 #### Prometheus Docker Image
 To run prometheus docker image
 ~~~
-docker run -d --rm --name=prometheus -p 9090:9090 -v <PROMETHEUS_YML_LOCATION>/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus --config.file=/etc/prometheus/prometheus.yml
+
+docker pull prom/prometheus
+
+docker run -d --rm --name=prometheus -p 9090:9090 -v C:/Users/"Vaibhav Maithani"/Desktop/Project_new/CricketScoreBoard/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+
 ~~~
 
 #### Rabbitmq Docker Image
@@ -56,7 +60,8 @@ Password:- guest
 Run these command to generate a TLS(Transport Layer Security) certificate self signed for security of transfer data over the network from http to https 
 ##### To generate PKCS12 security certificate (self signed)
 ~~~
-$ keytool -genkeypair -alias scoreboard -keyalg RSA -keysize 4096 -storetype PKCS12 -keystore scoreboard.p12 -validity 3650 -storepass xyz123
+$ keytool -genkeypair -alias scoreboard -keyalg RSA -keysize 4096 -storetype PKCS12 -keystore scoreboard.p12 -validity 3650 -storepass xyz123 -ext SAN=dns:testa.abc.com,ip:1.1.1.1
+keytool -genkeypair -keystore <keystore> -dname "CN=test, OU=Unknown, O=Unknown, L=Unknown, ST=Unknown, C=Unknown" -keypass <keypwd> -storepass <storepass> -keyalg RSA -alias unknown -ext SAN=dns:test.abc.com,ip:1.1.1.1
 ~~~
 ##### To view PKCS12 security certificate (self signed)
 ~~~
