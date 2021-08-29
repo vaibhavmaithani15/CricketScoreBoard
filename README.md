@@ -33,9 +33,9 @@ $ docker run -d --rm --name mysql -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_
 To run prometheus docker image
 ~~~
 
-docker pull prom/prometheus
-
-docker run -d --rm --name=prometheus -p 9090:9090 -v C:/Users/"Vaibhav Maithani"/Desktop/Project_new/CricketScoreBoard/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+$ docker pull prom/prometheus
+ 
+$ docker run -d --rm --name=prometheus -p 9090:9090 -v C:/Users/"Vaibhav Maithani"/Desktop/Project_new/CricketScoreBoard/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
 
 ~~~
 
