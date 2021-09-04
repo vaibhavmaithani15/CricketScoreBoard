@@ -1,6 +1,5 @@
 # CricketScoreBoard
-Live Cricket Match Scoreboard is an API which can help you to 
-
+Live Cricket Match Scoreboard” is a web-based application developed on Spring Framework to get the live update of the scoreboard. The idea is to provide user to get update of the cricket match scoreboard even when the user is not watching the match live. 
 ## Build With
 1 Spring Boot - 2.5.2\
 2 JPA(Java Persistance API)\
