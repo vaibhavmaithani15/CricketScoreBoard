@@ -13,22 +13,13 @@ scrape_configs:
     metrics_path: 'actuator/prometheus'
     scrape_interval: 5s
     static_configs:
-      - targets: ['192.168.1.7:8081']
+      - targets: ['LOCAL_MACHINE_IP_ADDRESS:8081']
         labels:
          group: 'springboot-info'
          application: 'cricketmatch'
-
-  - job_name: 'cricketmatch-actuator'
-    basic_auth:
-      username: rahul
-      password: rahul1234
-    scheme: 'https'
+  - job_name: 'prometheus'
     tls_config:
       insecure_skip_verify: true
-    metrics_path: 'actuator/metrics'
     scrape_interval: 5s
     static_configs:
-      - targets: ['192.168.1.7:8081']
-        labels:
-          group: 'scoreboard'
-          application: 'cricketmatch'
+      - targets: [ 'LOCAL_MACHINE_IP_ADDRESS:9090' ]
