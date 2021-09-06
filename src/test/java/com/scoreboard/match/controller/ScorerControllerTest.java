@@ -11,6 +11,7 @@ import com.scoreboard.match.service.AuthenticationService;
 import com.scoreboard.match.service.MatchService;
 import com.scoreboard.match.service.ScoreService;
 import com.scoreboard.match.util.TeamEnum;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +48,15 @@ public class ScorerControllerTest {
     @MockBean
     private MatchService matchService;
     @MockBean
+    private MeterRegistry meterRegistry;
+    @MockBean
     private UserRepository userRepository;
     @MockBean
     private PublishScore publishScore;
     @MockBean
     private AuthenticationService authenticationService;
+    @MockBean
+    private ScorerController scorerController;
     @Test
     public void testValidMatch() throws Exception {
         when(matchService.getDetails(1)).thenReturn(mockMatchServiceDetails());
