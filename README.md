@@ -9,7 +9,10 @@ Live Cricket Match Scoreboard” is a web-based application developed on Spring 
 6 Docker\
 7 Rabbitmq - 3.1.3\
 8 Mysql - 8\
-9 Gradle
+9 Gradle\
+10 Grafana\
+11 Prometheus
+
 ## System Design
 This is the working model of the CricketScoreBoard Api
 ![](https://github.com/vaibhavmaithani15/CricketScoreBoard/blob/main/src/main/resources/images/system.png)
