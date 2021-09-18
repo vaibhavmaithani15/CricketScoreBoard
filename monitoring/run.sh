@@ -22,8 +22,13 @@ findIpAddress(){
   elif [[ "$OSTYPE" == "darwin"* ]]; then
           IP_ADDRESS=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}')
   elif [[ "$OSTYPE" == "msys"* ]]; then
-          IP_ADDRESS=$(ipconfig | grep "Wireless LAN adapter Wi-Fi 2: IPv4" | grep -Fv 127.0.0.1 | awk '{print $14}')
-          echo $IP_ADDRESS
+          IP_ADDRESS=$(ipconfig | grep "IPv4" | grep -Fv 127.0.0.1 | awk '{print $14}')
+          IFS=' '
+          read -ra arr <<< "$IP_ADDRESS"
+          for val in "${arr[@]}";
+          do
+            IP_ADDRESS=$val
+          done
   else
            echo "Unknown"
   fi
@@ -95,8 +100,8 @@ findRunningDockerContainerIpAddress() {
 
 startBanner
 findIpAddress
-#addLocalSystemIPAddressInPrometheusYml
-#runPrometheus
+addLocalSystemIPAddressInPrometheusYml
+runPrometheus
 #runGrafana
 #setupGrafana
 #runMysqlInDoker
