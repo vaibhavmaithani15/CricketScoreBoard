@@ -23,7 +23,7 @@ findIpAddress(){
           IP_ADDRESS=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}')
   elif [[ "$OSTYPE" == "msys"* ]]; then
           IP_ADDRESS=$(ipconfig | grep "IPv4" | grep -Fv 127.0.0.1 | awk '{print $14}')
-          IFS=' '
+          IFS=''
           read -ra arr <<< "$IP_ADDRESS"
           for val in "${arr[@]}";
           do
@@ -38,7 +38,7 @@ findIpAddress(){
 addLocalSystemIPAddressInPrometheusYml(){
   LOCATION="${PWD%/*}"
   mkdir -p "$LOCATION"/build/monitoring
-  sed "s/LOCAL_MACHINE_IP_ADDRESS/$IP_ADDRESS/g" "$LOCATION"/monitoring/prometheus.yml > $LOCATION/build/monitoring/prometheus.yml
+  sed "s/LOCAL_MACHINE_IP_ADDRESS/$IP_ADDRESS/g" "$LOCATION"/monitoring/prometheus.yml > "$LOCATION"/build/monitoring/prometheus.yml
   echo "step 2: Created Prometheus.yml file : $LOCATION/build/monitoring/prometheus.yml"
 }
 
@@ -102,10 +102,10 @@ startBanner
 findIpAddress
 addLocalSystemIPAddressInPrometheusYml
 runPrometheus
-#runGrafana
-#setupGrafana
-#runMysqlInDoker
-#runRabbitMq
+runGrafana
+setupGrafana
+runMysqlInDoker
+runRabbitMq
 endBanner
 
 #docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' prometheus

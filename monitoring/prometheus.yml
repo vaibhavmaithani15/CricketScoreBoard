@@ -10,16 +10,16 @@ scrape_configs:
     scheme: 'https'
     tls_config:
       insecure_skip_verify: true
-    metrics_path: 'actuator/prometheus'
+    metrics_path: /actuator/prometheus
     scrape_interval: 5s
     static_configs:
       - targets: ['LOCAL_MACHINE_IP_ADDRESS:8081']
-        labels:
-         group: 'springboot-info'
-         application: 'cricketmatch'
-  - job_name: 'prometheus'
-    tls_config:
-      insecure_skip_verify: true
-    scrape_interval: 5s
-    static_configs:
-      - targets: [ 'LOCAL_MACHINE_IP_ADDRESS:9090' ]
+#        labels:
+#          group: 'springboot-info'
+#          application: 'cricketmatch'
+#  - job_name: 'prometheus'
+#    tls_config:
+#      insecure_skip_verify: true
+#    scrape_interval: 5s
+#    static_configs:
+#      - targets: [ 'LOCAL_MACHINE_IP_ADDRESS:9090' ]
