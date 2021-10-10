@@ -77,6 +77,12 @@ $ keytool -list -v -keystore scoreboard.p12
 This is the representation of database table to understand the tables inside the database.  
 ![](https://github.com/vaibhavmaithani15/CricketScoreBoard/blob/main/src/main/resources/images/Database.png)
 
+## Command Docker
+docker build . -f ./docker/Dockerfile -t scoreboard
+docker-compose -f ./docker/docker-compose.yml up
+
+docker run -d --rm --name scoreboard -p 8081:8081 scoreboard
+
 
 
 

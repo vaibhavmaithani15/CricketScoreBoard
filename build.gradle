@@ -42,7 +42,10 @@ dependencies {
 
     // Data base
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'mysql:mysql-connector-java'
+//    implementation 'mysql:mysql-connector-java'
+// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation 'mysql:mysql-connector-java:8.0.25'
+
 
     //flyway
     implementation "org.flywaydb:flyway-core"

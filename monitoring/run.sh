@@ -70,7 +70,7 @@ runMysqlInDoker(){
   echo "step 9: stop mysql container if exist"
   docker stop mysql
   echo "step 10: start building new mysql container"
-  docker run -d --rm --name mysql -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_DATABASE=scoreboard -e MYSQL_USER=rahul -e MYSQL_PASSWORD=abc123 -p 3308:3306 mysql:5.7
+  docker run -d --rm --name mysql -e MYSQL_ROOT_PASSWORD=dummypassword -e MYSQL_DATABASE=scoreboard -e MYSQL_USER=rahul -e MYSQL_PASSWORD=abc123 -p 3308:3306 mysql:8.0
   docker ps -f name=mysql
 }
 
