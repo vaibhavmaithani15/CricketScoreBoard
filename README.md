@@ -83,6 +83,10 @@ docker-compose -f ./docker/docker-compose.yml up
 
 docker run -d --rm --name scoreboard -p 8081:8081 scoreboard
 
+docker tag scoreboard:latest vikasdimri/scoreboard:1.0.0
+
+docker push vikasdimri/scoreboard:1.0.0
+
 
 
 
