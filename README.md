@@ -77,11 +77,17 @@ $ keytool -list -v -keystore scoreboard.p12
 This is the representation of database table to understand the tables inside the database.  
 ![](https://github.com/vaibhavmaithani15/CricketScoreBoard/blob/main/src/main/resources/images/Database.png)
 
-## Command Docker
+## Docker command to create image of application
 docker build . -f ./docker/Dockerfile -t scoreboard
+
+## Docker command to run the docker compose file
 docker-compose -f ./docker/docker-compose.yml up
 
 docker run -d --rm --name scoreboard -p 8081:8081 scoreboard
+
+## Docker command to push docker image to docker hub
+docker tag scoreboard:latest vaibhav15/scoreboard:1.0.0
+docker push vaibhav15/scoreboard:1.0.0
 
 
 

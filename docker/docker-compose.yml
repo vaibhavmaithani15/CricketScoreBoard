@@ -9,24 +9,25 @@ services:
       - MYSQL_USER=rahul
       - MYSQL_PASSWORD=abc123
     ports:
-      - 3308:3306
+      - 3306:3306
 
   rabbitmq:
     image: rabbitmq:3-management
+    container_name: rabbitmq
     ports:
       - 15672:15672
       - 5672:5672
 
   flyway:
     image: flyway/flyway
-    command: -url=jdbc:mysql://mysql-standalone:3308/scoreboard -schemas=scoreboard -user=root -password=abc123 -connectRetries=60 migrate
+    command: -url=jdbc:mysql://mysql-standalone:3306/scoreboard -schemas=scoreboard -user=rahul -password=abc123 -connectRetries=60 migrate
     volumes:
       - .:/db/migration/sqlserver
     depends_on:
       - mysql-standalone
 
   scoreboard:
-    image: scoreboard
+    image: vaibhav15/scoreboard:1.0.0
     depends_on:
       - mysql-standalone
       - rabbitmq
