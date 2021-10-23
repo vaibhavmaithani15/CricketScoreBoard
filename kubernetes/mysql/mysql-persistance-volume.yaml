@@ -24,59 +24,59 @@ spec:
   resources:
     requests:
       storage: 500Mi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql-pv-volume-2
-  labels:
-    type: mysql-local-2
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 500Mi
-  accessModes:
-    - ReadOnlyMany
-  hostPath:
-    path: "/mnt/data"
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pv-claim-2
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadOnlyMany
-  resources:
-    requests:
-      storage: 500Mi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql-pv-volume-3
-  labels:
-    type: mysql-local-3
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 500Mi
-  accessModes:
-    - ReadOnlyMany
-  hostPath:
-    path: "/mnt/data"
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pv-claim-3
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadOnlyMany
-  resources:
-    requests:
-      storage: 500Mi
+#---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: mysql-pv-volume-2
+#  labels:
+#    type: mysql-local-2
+#spec:
+#  storageClassName: manual
+#  capacity:
+#    storage: 500Mi
+#  accessModes:
+#    - ReadOnlyMany
+#  hostPath:
+#    path: "/mnt/data"
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: mysql-pv-claim-2
+#spec:
+#  storageClassName: manual
+#  accessModes:
+#    - ReadOnlyMany
+#  resources:
+#    requests:
+#      storage: 500Mi
+#---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: mysql-pv-volume-3
+#  labels:
+#    type: mysql-local-3
+#spec:
+#  storageClassName: manual
+#  capacity:
+#    storage: 500Mi
+#  accessModes:
+#    - ReadOnlyMany
+#  hostPath:
+#    path: "/mnt/data"
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: mysql-pv-claim-3
+#spec:
+#  storageClassName: manual
+#  accessModes:
+#    - ReadOnlyMany
+#  resources:
+#    requests:
+#      storage: 500Mi
 
 

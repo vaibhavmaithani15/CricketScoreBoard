@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scoreboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scoreboard
+  template:
+    metadata:
+      labels:
+        app: scoreboard
+    spec:
+      containers:
+        - name: scoreboard
+          image: vaibhav15/scoreboard:1.0.0
+          ports:
+            - containerPort: 8081
