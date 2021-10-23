@@ -4,7 +4,7 @@ metadata:
   name: mysql
 spec:
   serviceName: "mysql"
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: mysql
@@ -31,17 +31,7 @@ spec:
           volumeMounts:
             - name: mysql-persistent-storage-1
               mountPath: /var/lib/mysql
-            - name: mysql-persistent-storage-2
-              mountPath: /var/lib/mysql
-            - name: mysql-persistent-storage-3
-              mountPath: /var/lib/mysql
       volumes:
         - name: mysql-persistent-storage-1
           persistentVolumeClaim:
             claimName: mysql-pv-claim-1
-        - name: mysql-persistent-storage-2
-          persistentVolumeClaim:
-            claimName: mysql-pv-claim-2
-        - name: mysql-persistent-storage-3
-          persistentVolumeClaim:
-            claimName: mysql-pv-claim-3
